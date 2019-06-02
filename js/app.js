@@ -25,7 +25,6 @@ $(document).ready(function() {
     suburl = "discover/movie?sort_by=popularity.desc"; // sort popular movies
     $.ajax({
       url: baseURL + suburl + key2,
-      // url: "books.json",
       dataType: "json",
       type: "get",
       success: function(datos) {
@@ -36,7 +35,7 @@ $(document).ready(function() {
             <img src="${imgUrl}${imgSize}${obj.poster_path}" class="img-fluid rounded float-left mr-3"><br>
             <p class="mt-5">${obj.title} ${obj.release_date}</p>
           </div>
-            `);
+          `);
         });
       }
     });
