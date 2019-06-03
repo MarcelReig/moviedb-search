@@ -23,7 +23,7 @@ $(document).ready(function() {
       .val()
       .trim();
     history.pushState({ page: "search" }, null, "/search/" + keyword);
-    console.log("pushed State in searchMovie() : search");
+    // console.log("pushed State in searchMovie() : search");
     $("#content").empty();
     searchMovie(keyword);
   });
@@ -34,7 +34,7 @@ $(document).ready(function() {
       .trim();
     if (e.keyCode == 13) {
       history.pushState({ page: "search" }, null, "/search/" + keyword);
-      console.log("pushed State in searchMovie() : search");
+      // console.log("pushed State in searchMovie() : search");
       $("#content").empty();
       searchMovie(keyword);
     }
@@ -47,7 +47,7 @@ $(document).ready(function() {
       dataType: "json",
       type: "get",
       success: function(data) {
-        console.log(data);
+        // console.log(data);
         $.each(data.results, function(i, obj) {
           $("#content").append(`
             <div class="col-md-6 mb-3">
@@ -73,7 +73,7 @@ $(document).ready(function() {
       type: "get",
       success: function(data) {
         history.pushState({ page: "search" }, null, "/search/" + keyword);
-        console.log("pushed State in searchMovie() : search");
+        // console.log("pushed State in searchMovie() : search");
         $.each(data.results, function(i, obj) {
           $("#content").append(`
             <div class="col-md-6 mb-3">
