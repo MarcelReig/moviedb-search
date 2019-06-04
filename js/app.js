@@ -75,14 +75,27 @@ $(document).ready(function() {
         history.pushState({ page: "search" }, null, "/search/" + keyword);
         // console.log("pushed State in searchMovie() : search");
         $.each(data.results, function(i, obj) {
-          $("#content").append(`
+          if (obj.poster_path != null) {
+            $("#content").append(`
             <div class="col-md-6 mb-3">
-              <img src="${imgUrl}${imgSize}${obj.poster_path}" class="img-fluid rounded float-left mr-3"><br>
-              <p class="mt-5">${
-                obj.title
-              } <br><small>${obj.release_date}</small></p>
+              <img src="${imgUrl}${imgSize}${
+              obj.poster_path
+            }" class="img-fluid rounded float-left mr-3"><br>
+              <p class="mt-5">${obj.title} <br><small>${
+              obj.release_date
+            }</small></p>
             </div>
             `);
+          } else {
+            $("#content").append(`
+            <div class="col-md-6 mb-3">
+              <img src="http://placehold.jp/92x138.png" class="img-fluid rounded float-left mr-3"><br>
+              <p class="mt-5">${obj.title} <br><small>${
+              obj.release_date
+            }</small></p>
+            </div>
+            `);
+          }
         });
       }
     });
