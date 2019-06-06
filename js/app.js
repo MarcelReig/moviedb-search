@@ -22,9 +22,8 @@ $(document).ready(function() {
     let keyword = $("#filter-search")
       .val()
       .trim();
-    history.pushState({ page: "search" }, null, "/search/" + keyword);
-    // console.log("pushed State in searchMovie() : search");
     $("#content").empty();
+    $("#overview").empty();
     searchMovie(keyword);
   });
 
@@ -33,9 +32,9 @@ $(document).ready(function() {
       .val()
       .trim();
     if (e.keyCode == 13) {
-      history.pushState({ page: "search" }, null, "/search/" + keyword);
-      // console.log("pushed State in searchMovie() : search");
+      s;
       $("#content").empty();
+      $("#overview").empty();
       searchMovie(keyword);
     }
   });
@@ -47,11 +46,10 @@ $(document).ready(function() {
       dataType: "json",
       type: "get",
       success: function(data) {
-        // console.log(data);
         $.each(data.results, function(i, obj) {
           $("#content").append(`
             <div class="col-md-4 mb-3">
-              <img src="${imgUrl}${imgSize}${obj.poster_path}" itemId="${obj.id}" class="img-fluid poster rounded float-left mr-3"><br>
+              <img src="${imgUrl}${imgSize}${obj.poster_path}" itemId="${obj.id}" class="img-fluid poster rounded float-left mr-3">
               <p class="mt-5">${
                 obj.title
               } <br><small>${obj.release_date}</small></p>
@@ -60,8 +58,6 @@ $(document).ready(function() {
         });
         $(".poster").on("click", function() {
           let itemId = $(this).attr("itemId");
-          history.pushState({ page: "detail" }, null, "/movie/" + itemId);
-          //console.log("pushed State in getItemDetail : detail");
           getItemDetail(itemId);
         });
       }
@@ -75,24 +71,37 @@ $(document).ready(function() {
       url: url + itemId + key,
       dataType: "jsonp"
     })
+
       .done(function(obj) {
         let imgSize = "w300/";
+        $("#overview").empty();
         $("#overview").append(`
+        <div class="row wrapp-overview">
         <div class="col-md-4  py-5 mb-3">
           <img src="${imgUrl}${imgSize}${obj.poster_path}" itemId=${obj.id} class="img-fluid poster rounded">
         </div>
         <div class="col-md-8">
+        <button type="button" class="close close-overview my-3 mr-3" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
         <h3 class="mt-5">${
           obj.title
         } <br><small>${obj.release_date}</small></h3>
         <h3>Overview</h3>
         <p class="lead">${obj.overview}</p>
         </div>
+        </div
         `);
       })
+
       .fail(function(jqxhr, textStatus, error) {
         console.log("getItemDetail ajax error: " + textStatus + ", " + error);
       });
+
+    $(document).on("click", "button.close-overview", function() {
+      console.log("remove-overview-clicked");
+      $(".wrapp-overview").remove();
+    });
   }
 
   // Search function
@@ -104,15 +113,13 @@ $(document).ready(function() {
       dataType: "jsonp",
       type: "get",
       success: function(data) {
-        history.pushState({ page: "search" }, null, "/search/" + keyword);
-        // console.log("pushed State in searchMovie() : search");
         $.each(data.results, function(i, obj) {
           if (obj.poster_path != null) {
             $("#content").append(`
             <div class="col-md-6 mb-3">
-              <img src="${imgUrl}${imgSize}${
-              obj.poster_path
-            }" class="img-fluid rounded float-left mr-3"><br>
+            <img src="${imgUrl}${imgSize}${obj.poster_path}" itemId="${
+              obj.id
+            }" class="img-fluid poster rounded float-left mr-3">
               <p class="mt-5">${obj.title} <br><small>${
               obj.release_date
             }</small></p>
@@ -121,13 +128,19 @@ $(document).ready(function() {
           } else {
             $("#content").append(`
             <div class="col-md-6 mb-3">
-              <img src="https://via.placeholder.com/92x138.png" class="img-fluid rounded float-left mr-3"><br>
+            <img src="${imgUrl}${imgSize}${obj.poster_path}" itemId="${
+              obj.id
+            }" class="img-fluid poster rounded float-left mr-3">
               <p class="mt-5">${obj.title} <br><small>${
               obj.release_date
             }</small></p>
             </div>
             `);
           }
+        });
+        $(".poster").on("click", function() {
+          let itemId = $(this).attr("itemId");
+          getItemDetail(itemId);
         });
       }
     });
