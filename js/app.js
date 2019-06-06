@@ -127,7 +127,9 @@ $(document).ready(function() {
           } else {
             $("#content").append(`
             <div class="col-md-6 mb-3">
-            <img src="https://via.placeholder.com/92x138.png" class="img-fluid rounded poster float-left mr-3">
+            <img src="https://via.placeholder.com/92x138.png" class="img-fluid rounded poster float-left mr-3" itemId="${
+              obj.id
+            }">
               <p class="mt-5">${obj.title} <br><small>${
               obj.release_date
             }</small></p>
