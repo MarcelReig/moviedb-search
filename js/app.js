@@ -32,7 +32,6 @@ $(document).ready(function() {
       .val()
       .trim();
     if (e.keyCode == 13) {
-      s;
       $("#content").empty();
       $("#overview").empty();
       searchMovie(keyword);
