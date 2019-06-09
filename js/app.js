@@ -78,7 +78,7 @@ $(document).ready(function() {
     })
 
       .done(function(obj) {
-        let imgSize = "w300/";
+        let imgSize = "w780/";
         $("#overview").empty();
         $("#overview").append(`
         <div class="row wrapp-overview">
