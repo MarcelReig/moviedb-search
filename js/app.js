@@ -15,7 +15,7 @@ $(document).ready(function() {
   const byPopularity = "discover/movie?sort_by=popularity.desc";
   const key2 = "&api_key=0721fb3764192b1547c7f9a484a2391a";
   const imgUrl = "https://image.tmdb.org/t/p/";
-  let imgSize = "w92/";
+  let imgSize = "w300/";
 
   // event handlers
   $("#titleSearchBtn").on("click", function(e) {
@@ -47,13 +47,19 @@ $(document).ready(function() {
       success: function(data) {
         $.each(data.results, function(i, obj) {
           $("#content").append(`
-            <div class="col-md-4 mb-3">
-              <img src="${imgUrl}${imgSize}${obj.poster_path}" itemId="${obj.id}" class="img-fluid poster rounded float-left mr-3">
-              <p class="mt-5">${
-                obj.title
-              } <br><small>${obj.release_date}</small></p>
-            </div>
-            `);
+          <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-3">
+              <div class="card" style="min-height: 500px;">
+                <img src="${imgUrl}${imgSize}${obj.poster_path}" itemId="${obj.id}" class="card-img-top poster" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">${obj.title}</h5>
+                  <p class="card-text">${obj.release_date}</p>
+                </div>
+                <div class="card-footer bg-transparent border-white"><a href="#" class="btn btn-outline-dark poster" itemId="${
+                  obj.id
+                }">Overview</a></div>
+              </div>
+          </div>
+          `);
         });
         $(".poster").on("click", function() {
           let itemId = $(this).attr("itemId");
@@ -76,7 +82,7 @@ $(document).ready(function() {
         $("#overview").empty();
         $("#overview").append(`
         <div class="row wrapp-overview">
-        <div class="col-md-4  py-5 mb-3">
+        <div class="col-md-4  pt-5 mb-3">
           <img src="${imgUrl}${imgSize}${obj.poster_path}" itemId=${obj.id} class="img-fluid poster rounded">
         </div>
         <div class="col-md-8">
@@ -115,25 +121,37 @@ $(document).ready(function() {
         $.each(data.results, function(i, obj) {
           if (obj.poster_path != null) {
             $("#content").append(`
-            <div class="col-md-6 mb-3">
-            <img src="${imgUrl}${imgSize}${obj.poster_path}" itemId="${
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-3">
+            <div class="card" style="min-height: 500px;">
+              <img src="${imgUrl}${imgSize}${obj.poster_path}" itemId="${
               obj.id
-            }" class="img-fluid poster rounded float-left mr-3">
-              <p class="mt-5">${obj.title} <br><small>${
-              obj.release_date
-            }</small></p>
+            }" class="card-img-top poster" alt="Card image cap">
+              <div class="card-body">
+              <h5 class="card-title">${obj.title}</h5>
+              <p class="card-text">${obj.release_date}</p>
+              </div>
+              <div class="card-footer bg-transparent border-white"><a href="#" class="btn btn-outline-dark poster" itemId="${
+                obj.id
+              }">Overview</a></div>
+            </div>
             </div>
             `);
           } else {
             $("#content").append(`
-            <div class="col-md-6 mb-3">
-            <img src="https://via.placeholder.com/92x138.png" class="img-fluid rounded poster float-left mr-3" itemId="${
-              obj.id
-            }">
-              <p class="mt-5">${obj.title} <br><small>${
-              obj.release_date
-            }</small></p>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-2 mb-3">
+            <div class="card" style="min-height: 500px;">
+              <img src="https://via.placeholder.com/300x450.png" class="card-img-top poster" itemId="${
+                obj.id
+              }" alt="Card image cap">
+              <div class="card-body">
+              <h5 class="card-title">${obj.title}</h5>
+              <p class="card-text">${obj.release_date}</p>
+              </div>
+              <div class="card-footer bg-transparent border-white"><a href="#" class="btn btn-outline-dark poster" itemId="${
+                obj.id
+              }">Overview</a></div>
             </div>
+        </div>
             `);
           }
         });
